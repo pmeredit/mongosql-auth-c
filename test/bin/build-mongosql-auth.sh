@@ -61,7 +61,7 @@ EOF
 
     cd $ARTIFACTS_DIR
     echo "downloading boost..."
-    curl -S "http://noexpire.s3.amazonaws.com/sqlproxy/sources/$BOOST_FILE" > $BOOST_FILE
+    curl -S $BOOST_S3_URL > $BOOST_FILE
     tar xvzf $BOOST_FILE
     cd -
 

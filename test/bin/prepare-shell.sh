@@ -5,8 +5,10 @@ MAJOR_VERSION=1
 MINOR_VERSION=1
 PATCH_VERSION=0
 
-BOOST_DIR=boost_1_59_0
-BOOST_FILE=$BOOST_DIR.tar.gz
+BOOST_DIR="boost_1_59_0"
+BOOST_FILE="$BOOST_DIR.tar.gz"
+FULL_BOOST_DIR_PATH="$ARTIFACTS_DIR/$BOOST_DIR"
+BOOST_S3_URL="http://noexpire.s3.amazonaws.com/sqlproxy/sources/$BOOST_FILE"
 
 export PATH="$PATH:$CMAKE_PATH:$MSBUILD_PATH"
 
@@ -28,7 +30,7 @@ LOG_FILE="$ARTIFACTS_DIR/log/${basename%.sh}.log"
 export SQLPROXY_DOWNLOAD_DIR="$ARTIFACTS_DIR/sqlproxy"
 export MONGO_ORCHESTRATION_HOME="$ARTIFACTS_DIR/orchestration"
 
-CMAKE_ARGS="-DWITH_BOOST=$ARTIFACTS_DIR/$BOOST_DIR"
+CMAKE_ARGS="-DWITH_BOOST=$FULL_BOOST_DIR_PATH"
 platform="$(uname)"
 if [ "Linux" = "$platform" ]; then
     CMAKE_ARGS="$CMAKE_ARGS -DWITH_SSL=system"
