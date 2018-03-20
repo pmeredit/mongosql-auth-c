@@ -5,6 +5,9 @@ MAJOR_VERSION=1
 MINOR_VERSION=1
 PATCH_VERSION=0
 
+BOOST_DIR=boost_1_59_0
+BOOST_FILE=$BOOST_DIR.tar.gz
+
 export PATH="$PATH:$CMAKE_PATH:$MSBUILD_PATH"
 
 basename=${0##*/}
@@ -25,7 +28,7 @@ LOG_FILE="$ARTIFACTS_DIR/log/${basename%.sh}.log"
 export SQLPROXY_DOWNLOAD_DIR="$ARTIFACTS_DIR/sqlproxy"
 export MONGO_ORCHESTRATION_HOME="$ARTIFACTS_DIR/orchestration"
 
-CMAKE_ARGS="-DDOWNLOAD_BOOST=1 -DWITH_BOOST=$ARTIFACTS_DIR/boost"
+CMAKE_ARGS="-DWITH_BOOST=$ARTIFACTS_DIR/$BOOST_DIR"
 platform="$(uname)"
 if [ "Linux" = "$platform" ]; then
     CMAKE_ARGS="$CMAKE_ARGS -DWITH_SSL=system"

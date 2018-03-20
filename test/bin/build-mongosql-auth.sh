@@ -59,6 +59,12 @@ EOF
 
     # now build the plugin
 
+    cd $ARTIFACTS_DIR
+    echo "downloading boost..."
+    curl -S "http://noexpire.s3.amazonaws.com/sqlproxy/sources/$BOOST_FILE" > $BOOST_FILE
+    tar xvzf $BOOST_FILE
+    cd -
+
     mkdir -p bld
     cd bld
 
