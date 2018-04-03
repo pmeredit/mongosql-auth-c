@@ -114,6 +114,9 @@ functions:
 
           VARIANT="${variant|other}"
 
+          export TESTUNAME=${mongosqld_uname}
+          export TESTPWD=${mongosqld_pwd}
+
           export PROJECT_DIR="$(pwd)"
           export SCRIPT_DIR="$PROJECT_DIR/test/bin"
           if [ "Windows_NT" = "$OS" ]; then
@@ -503,7 +506,7 @@ axes:
     display_name: Windows 64 (VS2015)
     run_on: windows-64-vs2015-compile
     variables:
-      variant: windows-vs2013
+      variant: windows-64
   - id: windows-32
     display_name: Windows 32 (VS2015)
     run_on: windows-64-vs2015-compile

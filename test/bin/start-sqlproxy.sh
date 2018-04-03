@@ -33,7 +33,7 @@
             $SQLPROXY_MONGO_ARGS \
             --logPath $ARTIFACTS_DIR/log/sqlproxy.log \
             --schema $PROJECT_DIR/test/resources/sqlproxy \
-            --auth -vvvv
+            --auth -vvvv --mongo-username "$TESTUNAME" --mongo-password "$TESTPWD"
         net start mongosql
     else
         cd *
@@ -42,7 +42,7 @@
             $SQLPROXY_MONGO_ARGS \
             --logPath $ARTIFACTS_DIR/log/sqlproxy.log \
             --schema $PROJECT_DIR/test/resources/sqlproxy \
-            --auth &
+            --auth --mongo-username "$TESTUNAME" --mongo-password "$TESTPWD" &
     fi
     sleep 5
     echo "done starting sqlproxy"
