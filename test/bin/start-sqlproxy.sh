@@ -5,6 +5,8 @@
 (
     set -o errexit
 
+    mkdir -p "$ARTIFACTS_DIR/sqlproxy"
+
     echo "downloading sqlproxy..."
     python $PROJECT_DIR/test/bin/download-sqlproxy.py
     echo "done downloading sqlproxy"
@@ -33,20 +35,19 @@
             $SQLPROXY_MONGO_ARGS \
             --logPath $ARTIFACTS_DIR/log/sqlproxy.log \
             --schema $PROJECT_DIR/test/resources/sqlproxy \
-            --auth -vvvv --mongo-username "$TESTUNAME" --mongo-password "$TESTPWD"
+            --auth -vvvv --mongo-username $MONGO_USER --mongo-password $MONGO_PWD
         net start mongosql
     else
         cd *
         cd bin
-        nohup ./mongosqld -vvvv \
+            nohup ./mongosqld -vvvv \
             $SQLPROXY_MONGO_ARGS \
             --logPath $ARTIFACTS_DIR/log/sqlproxy.log \
             --schema $PROJECT_DIR/test/resources/sqlproxy \
-            --auth --mongo-username "$TESTUNAME" --mongo-password "$TESTPWD" &
+            --auth --mongo-username $MONGO_USER --mongo-password $MONGO_PWD &
     fi
     sleep 5
     echo "done starting sqlproxy"
-
-) > $LOG_FILE 2>&1
+) 2>&1 | tee $LOG_FILE &
 
 print_exit_msg

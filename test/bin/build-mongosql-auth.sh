@@ -88,8 +88,7 @@ EOF
     mkdir -p $ARTIFACTS_DIR/build
     cp $PLUGIN_LIBRARY $ARTIFACTS_DIR/build/
     echo "copied plugin to build dir"
-    2>&1
-) | tee $LOG_FILE
+) 2>&1 | tee $LOG_FILE
 
 print_exit_msg
 

@@ -1,6 +1,8 @@
 
 . "$(dirname $0)/platforms.sh"
 
+set -o pipefail
+
 MAJOR_VERSION=1
 MINOR_VERSION=1
 PATCH_VERSION=0

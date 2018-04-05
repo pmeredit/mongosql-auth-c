@@ -114,8 +114,8 @@ functions:
 
           VARIANT="${variant|other}"
 
-          export TESTUNAME=${mongosqld_uname}
-          export TESTPWD=${mongosqld_pwd}
+          export MONGO_UNAME=${gssapi_auth_principal}
+          export MONGO_PWD=${gssapi_auth_linux_password}
 
           export PROJECT_DIR="$(pwd)"
           export SCRIPT_DIR="$PROJECT_DIR/test/bin"
@@ -195,6 +195,8 @@ functions:
       params:
         script: |
           ${PREPARE_SHELL}
+          export MONGO_USER=drivers-team?mechanism=PLAIN
+          export MONGO_PWD=mongor0x\$xgen
           ${SCRIPT_DIR}/run-integration-tests-plain.sh
 
   "run scram integration tests":
@@ -203,6 +205,8 @@ functions:
       params:
         script: |
           ${PREPARE_SHELL}
+          export MONGO_USER=bob
+          export MONGO_PWD=pwd123
           ${SCRIPT_DIR}/run-integration-tests-scram.sh
 
   "run gssapi integration tests":
