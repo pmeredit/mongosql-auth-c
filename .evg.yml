@@ -63,6 +63,8 @@ tasks:
     - func: "install dependencies"
     - func: "start mongosqld"
       vars:
+        mongo_user: 'drivers-team?mechanism=PLAIN'
+        mongo_pwd: 'mongor0x$xgen'
         mongodb_args: --mongo-uri=ldaptest.10gen.cc
     - func: "build mongosql_auth"
     - func: "run plain integration tests"
@@ -72,6 +74,9 @@ tasks:
   commands:
     - func: "install dependencies"
     - func: "start mongosqld"
+      vars:
+          mongo_usr: 'bob'
+          mongo_pwd: 'pwd123'
     - func: "start mongo-orchestration"
     - func: "build mongosql_auth"
     - func: "run scram integration tests"
@@ -195,8 +200,6 @@ functions:
       params:
         script: |
           ${PREPARE_SHELL}
-          export MONGO_USER=drivers-team?mechanism=PLAIN
-          export MONGO_PWD=mongor0x\$xgen
           ${SCRIPT_DIR}/run-integration-tests-plain.sh
 
   "run scram integration tests":
@@ -205,8 +208,6 @@ functions:
       params:
         script: |
           ${PREPARE_SHELL}
-          export MONGO_USER=bob
-          export MONGO_PWD=pwd123
           ${SCRIPT_DIR}/run-integration-tests-scram.sh
 
   "run gssapi integration tests":
@@ -266,6 +267,8 @@ functions:
           export AWS_ACCESS_KEY_ID=${aws_key}
           export AWS_SECRET_ACCESS_KEY=${aws_secret}
           export SQLPROXY_MONGO_ARGS=${mongodb_args}
+          export MONGO_USER=${mongo_user}
+          export MONGO_PWD=${mongo_pwd}
           ${SCRIPT_DIR}/start-sqlproxy.sh
 
   "upload artifacts":
