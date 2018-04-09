@@ -63,8 +63,8 @@ tasks:
     - func: "install dependencies"
     - func: "start mongosqld"
       vars:
-        mongo_user: 'drivers-team?mechanism=PLAIN'
-        mongo_pwd: 'mongor0x$xgen'
+        mongo_user_name: 'drivers-team?mechanism=PLAIN'
+        mongo_password: 'mongor0x$xgen'
         mongodb_args: --mongo-uri=ldaptest.10gen.cc
     - func: "build mongosql_auth"
     - func: "run plain integration tests"
@@ -75,8 +75,8 @@ tasks:
     - func: "install dependencies"
     - func: "start mongosqld"
       vars:
-          mongo_usr: 'bob'
-          mongo_pwd: 'pwd123'
+          mongo_user_name: 'bob'
+          mongo_password: 'pwd123'
     - func: "start mongo-orchestration"
     - func: "build mongosql_auth"
     - func: "run scram integration tests"
@@ -118,9 +118,6 @@ functions:
           fi
 
           VARIANT="${variant|other}"
-
-          export MONGO_UNAME=${gssapi_auth_principal}
-          export MONGO_PWD=${gssapi_auth_linux_password}
 
           export PROJECT_DIR="$(pwd)"
           export SCRIPT_DIR="$PROJECT_DIR/test/bin"
@@ -267,8 +264,8 @@ functions:
           export AWS_ACCESS_KEY_ID=${aws_key}
           export AWS_SECRET_ACCESS_KEY=${aws_secret}
           export SQLPROXY_MONGO_ARGS=${mongodb_args}
-          export MONGO_USER=${mongo_user}
-          export MONGO_PWD=${mongo_pwd}
+          export MONGO_USER_NAME=${mongo_user_name}
+          export MONGO_PASSWORD=${mongo_password}
           ${SCRIPT_DIR}/start-sqlproxy.sh
 
   "upload artifacts":

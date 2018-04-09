@@ -5,6 +5,8 @@
 (
     set -o errexit
 
+    env | grep MONGO
+
     mkdir -p "$ARTIFACTS_DIR/sqlproxy"
 
     echo "downloading sqlproxy..."
@@ -35,7 +37,7 @@
             $SQLPROXY_MONGO_ARGS \
             --logPath $ARTIFACTS_DIR/log/sqlproxy.log \
             --schema $PROJECT_DIR/test/resources/sqlproxy \
-            --auth -vvvv --mongo-username $MONGO_USER --mongo-password $MONGO_PWD
+            --auth -vvvv --mongo-username $MONGO_USER_NAME --mongo-password $MONGO_PASSWORD
         net start mongosql
     else
         cd *
@@ -44,10 +46,10 @@
             $SQLPROXY_MONGO_ARGS \
             --logPath $ARTIFACTS_DIR/log/sqlproxy.log \
             --schema $PROJECT_DIR/test/resources/sqlproxy \
-            --auth --mongo-username $MONGO_USER --mongo-password $MONGO_PWD &
+            --auth --mongo-username $MONGO_USER_NAME --mongo-password $MONGO_PASSWORD &
     fi
     sleep 5
     echo "done starting sqlproxy"
-) 2>&1 | tee $LOG_FILE &
+) 
 
 print_exit_msg
