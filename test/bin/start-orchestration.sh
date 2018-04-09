@@ -4,6 +4,8 @@
 
 (
     set -o errexit
+ 
+    echo $PROJECT_DIR
     echo "bootstrapping mongo-orchestration..."
 
     AUTH=${AUTH:-noauth}
@@ -12,11 +14,11 @@
     STORAGE_ENGINE=${STORAGE_ENGINE}
     MONGODB_VERSION=${MONGODB_VERSION:-latest}
 
-    mkdir -p $MONGO_ORCHESTRATION_HOME
-    cp -r $PROJECT_DIR/test/resources/orchestration/* $MONGO_ORCHESTRATION_HOME
+    mkdir -p "$MONGO_ORCHESTRATION_HOME"
+    cp -r "$PROJECT_DIR"/test/resources/orchestration/* "$MONGO_ORCHESTRATION_HOME"
 
     DL_START=$(date +%s)
-    DIR=$(dirname $0)
+    DIR="$(dirname "$0")"
     # Functions to fetch MongoDB binaries
     . $DIR/download-mongodb.sh
 
