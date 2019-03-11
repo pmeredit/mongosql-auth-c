@@ -16,6 +16,8 @@
 
 #include <stdarg.h>
 #include <stdlib.h>
+#include <stdio.h>
+#include <string.h>
 #include "mongosql-auth.h"
 
 #define MONGOSQL_AUTH_PROTOCOL_MAJOR_VERSION 1
@@ -24,7 +26,9 @@
 void
 mongosql_auth_log(const char *format,...) {
     char *debug_var;
+    char *debug_location;
     va_list args;
+    FILE *fptr = stderr;
 
     debug_var = getenv("MONGOSQL_AUTH_DEBUG");
     if (!debug_var || strcmp(debug_var, "") == 0 || strcmp(debug_var, "0") == 0) {
@@ -32,10 +36,22 @@ mongosql_auth_log(const char *format,...) {
         return;
     }
 
+    debug_location = getenv("MONGOSQL_AUTH_LOG_PATH");
+    if (debug_location != NULL && strcmp(debug_location, "") != 0) {
+        fprintf(stderr, "[!!!!!!] ");
+        fprintf(stderr, "%s\n", debug_location);
+        fptr = fopen(debug_location, "a");
+        if (fptr == NULL) {
+            fprintf(stderr, "[!!!!!!] ");
+            fprintf(stderr, "failed to open\n");
+            fptr = stderr;
+        }
+    }
+
     va_start(args, format);
-    fprintf(stderr, "[DEBUG]  ");
-    vfprintf(stderr, format, args);
-    fprintf(stderr, "\n");
+    fprintf(fptr, "[DEBUG]  ");
+    vfprintf(fptr, format, args);
+    fprintf(fptr, "\n");
     va_end(args);
 }
 
